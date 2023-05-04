@@ -1,9 +1,13 @@
-import "@/styles/globals.css";
+import "@fontsource/kanit/400.css";
+import "@fontsource/kanit/500.css";
+import "@fontsource/kanit/600.css";
+import "@fontsource/kanit/700.css";
+
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 
 const theme = extendTheme({
   fonts: {
-    body: `'Edu NSW ACT Foundation', cursive`,
+    body: `'Kanit', cursive`,
   },
 });
 
