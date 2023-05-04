@@ -13,12 +13,12 @@ export default function ProfileIntroduction() {
   return (
     <Flex flexDirection="column" justifyContent="center" maxW="500px" gap={8}>
       <Text
-        fontSize={{ base: 24, sm: 32, lg: 56 }}
+        fontSize={{ base: 32, sm: 32, lg: 56 }}
         fontWeight="extrabold"
         color="gray.700"
       >
         Front-End React Developer
-        <TagRightIcon as={WavingHand} />
+        <WavingHand />
       </Text>
       <Text fontSize={16} color="gray.500">
         Hi, I'm Mark Lester T. Acak. A passionate Front-end React Developer

@@ -5,9 +5,12 @@ export default function WavingHand() {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 48 48"
-      width="40"
-      height="40"
-      style={{ display: "inline-block", marginLeft: "16px" }}
+      style={{
+        display: "inline-block",
+        marginLeft: "16px",
+        maxHeight: "40px",
+        maxWidth: "40px",
+      }}
     >
       <radialGradient
         id="MIHOZNFGtJg_yAFr9vfAwa"
