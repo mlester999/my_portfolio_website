@@ -1,32 +1,56 @@
-import { Box, Flex, SimpleGrid, Text, Tooltip } from "@chakra-ui/react";
-import React from "react";
+import { useNavBarStore } from "@/store/useNavBarStore";
+import { Box, Flex, Image, SimpleGrid, Text, Tooltip } from "@chakra-ui/react";
+import { motion } from "framer-motion";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import ProfileImage from "./ProfileImage";
 import ProfileIntroduction from "./ProfileIntroduction";
-import BootstrapSvg from "./svg/BootstrapSvg";
-import ChakraSvg from "./svg/ChakraSvg";
-import CssSvg from "./svg/CssSvg";
-import HtmlSvg from "./svg/HtmlSvg";
-import JavaScriptSvg from "./svg/JavaScriptSvg";
-import JquerySvg from "./svg/JquerySvg";
-import LaravelSvg from "./svg/LaravelSvg";
-import LivewireSvg from "./svg/LivewireSvg";
-import NodejsSvg from "./svg/NodejsSvg";
-import PhpSvg from "./svg/PhpSvg";
-import ReactSvg from "./svg/ReactSvg";
-import ReduxSvg from "./svg/ReduxSvg";
-import StrapiSvg from "./svg/StrapiSvg";
-import TailwindSvg from "./svg/TailwindSvg";
-import TypescriptSvg from "./svg/TypescriptSvg";
-import VueSvg from "./svg/VueSvg";
 
-export default function HomeContent({ navH }) {
+export default function HomeContent({ navH, introduction }) {
+  const navBarBg = useNavBarStore((state) => state.changeNavBarBg);
+  const currentScreenScroll = useNavBarStore(
+    (state) => state.changeCurrentScroll
+  );
+
+  const ref = useRef(null);
+
+  const [height, setHeight] = useState(0);
+
+  console.log("Home content", height);
+
+  useLayoutEffect(() => {
+    setHeight(ref.current.offsetHeight);
+  }, []);
+
+  const changeNavBarBG = () => {
+    if (window.scrollY >= height) {
+      navBarBg(true);
+    } else {
+      navBarBg(false);
+    }
+
+    currentScreenScroll(window.scrollY);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", changeNavBarBG);
+  }, [height]);
+
   return (
-    <Box h="auto" overflow="hidden" px={16}>
+    <Box
+      as={motion.div}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 2 }}
+      ref={ref}
+      h="auto"
+      overflow="hidden"
+      px={16}
+    >
       <Flex
         mt={`${navH}px`}
         py={{ base: 16, lg: 24 }}
         h="full"
-        maxW="1100px"
+        maxW="1300px"
         mx="auto"
         flexDirection="column"
       >
@@ -38,13 +62,13 @@ export default function HomeContent({ navH }) {
           textAlign={{ base: "center", lg: "left" }}
         >
           <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={8}>
-            <ProfileImage />
+            <ProfileImage introduction={introduction} />
 
-            <ProfileIntroduction />
+            <ProfileIntroduction introduction={introduction} />
           </SimpleGrid>
         </Flex>
         <Flex alignItems="center" justifyContent="center" py={16}>
-          <SimpleGrid columns={{ base: 1 }} spacing={8} maxWidth="700px">
+          <SimpleGrid columns={{ base: 1 }} spacing={8}>
             <Text fontSize={20} textAlign={{ base: "center" }}>
               Tech Stack:
             </Text>
@@ -54,38 +78,38 @@ export default function HomeContent({ navH }) {
               wrap="wrap"
               alignItems="center"
               justifyContent="center"
+              maxW="1100px"
             >
-              <HtmlSvg />
-
-              <CssSvg />
-
-              <BootstrapSvg />
-
-              <TailwindSvg />
-
-              <JavaScriptSvg />
-
-              <TypescriptSvg />
-
-              <NodejsSvg />
-
-              <PhpSvg />
-
-              <JquerySvg />
-
-              <LaravelSvg />
-
-              <LivewireSvg />
-
-              <VueSvg />
-
-              <ReactSvg />
-
-              <ReduxSvg />
-
-              <ChakraSvg />
-
-              <StrapiSvg />
+              {introduction.techStacks.data.map((tech) => {
+                return (
+                  <Tooltip
+                    key={`${tech.id}`}
+                    label={`${tech.attributes.title}`}
+                    aria-label={`${tech.attributes.title}`}
+                  >
+                    <Box
+                      bg="white"
+                      borderRadius="full"
+                      boxShadow="xl"
+                      padding={{ base: 2, md: 4 }}
+                      cursor="pointer"
+                      _hover={{
+                        bgGradient:
+                          "linear-gradient(181.2deg, rgb(190, 190, 190) 10.5%, rgb(254, 254, 254) 86.8%)",
+                      }}
+                      transitionDuration="200ms"
+                    >
+                      <Box>
+                        <Image
+                          boxSize={{ base: 8, md: 10 }}
+                          borderRadius="sm"
+                          src={`http://localhost:1337${tech.attributes.icon.data.attributes.url}`}
+                        />
+                      </Box>
+                    </Box>
+                  </Tooltip>
+                );
+              })}
             </Flex>
           </SimpleGrid>
         </Flex>

@@ -1,15 +1,17 @@
 import React from "react";
 import {
-  AiFillMail,
-  AiFillFacebook,
-  AiFillLinkedin,
-  AiFillGithub,
-} from "react-icons/ai";
-import { Box, Flex, Text, Icon, Tag, TagRightIcon } from "@chakra-ui/react";
+  Box,
+  Flex,
+  Text,
+  Icon,
+  Tag,
+  TagRightIcon,
+  Image,
+} from "@chakra-ui/react";
 import Link from "next/link";
 import WavingHand from "./svg/WavingHand";
 
-export default function ProfileIntroduction() {
+export default function ProfileIntroduction({ introduction }) {
   return (
     <Flex flexDirection="column" justifyContent="center" maxW="500px" gap={8}>
       <Text
@@ -17,62 +19,35 @@ export default function ProfileIntroduction() {
         fontWeight="extrabold"
         color="gray.700"
       >
-        Front-End React Developer
+        {introduction.title}
         <WavingHand />
       </Text>
       <Text fontSize={16} color="gray.500">
-        Hi, I'm Mark Lester T. Acak. A passionate Front-end React Developer
-        based in Laguna, Philippines. 📍
+        {introduction.description}
       </Text>
-      <Flex gap={3} mx={{ base: "auto", lg: 0 }}>
-        <Link
-          href="mailto:mlester0806@gmail.com"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <Icon
-            as={AiFillMail}
-            boxSize={8}
-            _hover={{ color: "blue.400" }}
-            transitionDuration="200ms"
-          />
-        </Link>
-        <Link
-          href="https://www.facebook.com/mlester999/"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <Icon
-            as={AiFillFacebook}
-            boxSize={8}
-            _hover={{ color: "blue.400" }}
-            transitionDuration="200ms"
-          />
-        </Link>
-        <Link
-          href="https://www.linkedin.com/in/mlester999/"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <Icon
-            as={AiFillLinkedin}
-            boxSize={8}
-            _hover={{ color: "blue.400" }}
-            transitionDuration="200ms"
-          />
-        </Link>
-        <Link
-          href="https://github.com/mlester999"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <Icon
-            as={AiFillGithub}
-            boxSize={8}
-            _hover={{ color: "blue.400" }}
-            transitionDuration="200ms"
-          />
-        </Link>
+      <Flex flexDirection="column" gap={1} mx={{ base: "auto", lg: 0 }}>
+        <Text>Get in touch: </Text>
+
+        <Flex gap={3} style={{ marginLeft: "-6px" }}>
+          {introduction.socialMedia.map((social) => {
+            return (
+              <Link
+                key={`${social.id}`}
+                href={`${social.url}`}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <Image
+                  boxSize={{ base: 10, lg: 12 }}
+                  borderRadius="xl"
+                  src={`http://localhost:1337${social.icon.data.attributes.url}`}
+                  _hover={{ backgroundColor: "gray.300" }}
+                  transitionDuration="200ms"
+                />
+              </Link>
+            );
+          })}
+        </Flex>
       </Flex>
     </Flex>
   );

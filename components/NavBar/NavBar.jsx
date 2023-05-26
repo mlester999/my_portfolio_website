@@ -1,12 +1,16 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import Head from "next/head";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NavLink from "./NavLink";
 
 import Header from "@/shared/Header";
+import { useNavBarStore } from "@/store/useNavBarStore";
 
 export default function NavBar({ navH, setNavH }) {
+  const navBar = useNavBarStore((state) => state.navBarBg);
+  const initialNav = useNavBarStore((state) => state.initialNavPos);
+
   return (
     <React.Fragment>
       <Head>
@@ -18,6 +22,8 @@ export default function NavBar({ navH, setNavH }) {
         />
       </Head>
       <Header
+        navBG={navBar}
+        initialNav={initialNav}
         onHeightChanged={(h) => setNavH(h)}
         leftIcon={
           <a href="/">
