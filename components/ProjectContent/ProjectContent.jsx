@@ -34,11 +34,12 @@ export default function ProjectContent({ project }) {
 
   useLayoutEffect(() => {
     const tempArr = [];
-    console.log(`Scroll: ${currentScreenScroll}`);
-    projectRefs.current.forEach((el, i) => {
-      console.log(el.current.getBoundingClientRect());
 
-      if (currentScreenScroll > el.current.getBoundingClientRect().bottom) {
+    projectRefs.current.forEach((el, i) => {
+      if (
+        el.current.getBoundingClientRect().bottom - 100 <=
+        window.innerHeight
+      ) {
         tempArr[i] = true;
       } else {
         tempArr[i] = false;
@@ -47,10 +48,7 @@ export default function ProjectContent({ project }) {
       setProjectsIsVisible(tempArr);
     });
 
-    if (
-      currentScreenScroll >
-      ref.current.getBoundingClientRect().top - currentScreenScroll
-    ) {
+    if (ref.current.getBoundingClientRect().bottom <= window.innerHeight) {
       setTitleIsVisible(true);
     } else {
       setTitleIsVisible(false);
@@ -119,7 +117,7 @@ export default function ProjectContent({ project }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            fontSize="3xl"
+            fontSize={{ md: "xl", lg: "2xl", xl: "3xl" }}
             color="gray.700"
           >
             {project.description}
@@ -149,6 +147,7 @@ export default function ProjectContent({ project }) {
                   }}
                   display="grid"
                   columns={{ base: 1, lg: 2 }}
+                  px={{ base: 8, lg: 24, xl: 0 }}
                   pt={32}
                 >
                   <Flex
@@ -161,35 +160,53 @@ export default function ProjectContent({ project }) {
                         delay: 0.1,
                       },
                     }}
+                    gridRowStart={{ base: 2, lg: 1 }}
+                    gridColumnStart={{ base: "auto", lg: 1 }}
                     display="flex"
                     flexDirection="column"
-                    px={12}
+                    px={{ base: 6, md: 12 }}
+                    pt={{ base: 6, lg: 0 }}
                     justifyContent="center"
-                    gap={3}
+                    gap={{ base: 6, lg: 3 }}
                   >
                     <Flex flexDirection="column" gap={4}>
-                      <Text fontWeight="thin" fontSize="lg" color="blue.500">
+                      <Text
+                        fontWeight="thin"
+                        fontSize={{ base: "sm", sm: "md", md: "lg" }}
+                        color="blue.500"
+                      >
                         {proj.title}
                       </Text>
-                      <Heading color="gray.700">{proj.objectives}</Heading>
+                      <Heading
+                        color="gray.700"
+                        fontSize={{
+                          base: "xl",
+                          md: "2xl",
+                          lg: "3xl",
+                          xl: "4xl",
+                        }}
+                      >
+                        {proj.objectives}
+                      </Heading>
                     </Flex>
                     <Box>
-                      <Text fontSize="md" color="gray.500">
+                      <Text
+                        fontSize={{ base: "sm", md: "md" }}
+                        color="gray.500"
+                      >
                         {proj.description}
                       </Text>
                     </Box>
-                    <motion.a
+                    <Text
+                      as={motion.a}
                       href={proj.projectLink}
                       target="_blank"
                       initial="initial"
                       animate="initial"
                       whileHover="animate"
-                      style={{
-                        display: "inline-flex",
-                        flexDirection: "column",
-                        overflow: "hidden",
-                        width: "max-content",
-                      }}
+                      width="max-content"
+                      overflow="hidden"
+                      mx={{ base: "auto", lg: "0" }}
                     >
                       <Box
                         display="inline-flex"
@@ -230,10 +247,10 @@ export default function ProjectContent({ project }) {
                           ></motion.span>
                         </span>
                       </Box>
-                    </motion.a>
+                    </Text>
                   </Flex>
 
-                  <Flex alignItems="center">
+                  <Flex position="relative" alignItems="center">
                     <Image
                       as={motion.img}
                       initial={{ scale: 0 }}
@@ -243,6 +260,8 @@ export default function ProjectContent({ project }) {
                           ease: "easeInOut",
                         },
                       }}
+                      w={{ md: "container.sm", lg: "100%" }}
+                      mx={{ md: "auto", lg: "none" }}
                       borderRadius="xl"
                       src={`http://localhost:1337${proj.backgroundImage.data.attributes.url}`}
                       transitionDuration="200ms"
@@ -259,9 +278,16 @@ export default function ProjectContent({ project }) {
                         },
                       }}
                       borderRadius="lg"
-                      boxShadow="xl"
-                      width="600px"
-                      ml={4}
+                      boxShadow="2xl"
+                      width={{
+                        base: "400px",
+                        md: "600px",
+                        lg: "450px",
+                        xl: "600px",
+                      }}
+                      mx="auto"
+                      left="0"
+                      right="0"
                       position="absolute"
                       src={`http://localhost:1337${proj.projectPhoto[0].coverImage.data.attributes.url}`}
                       transitionDuration="200ms"
@@ -279,55 +305,109 @@ export default function ProjectContent({ project }) {
                   animate={{ opacity: projectsIsVisible[i] ? 1 : 0 }}
                   display="grid"
                   columns={{ base: 1, lg: 2 }}
+                  px={{ base: 8, lg: 24, xl: 0 }}
                   pt={32}
                 >
-                  <Flex alignItems="center">
+                  <Flex position="relative" alignItems="center">
                     <Image
+                      as={motion.img}
+                      initial={{ scale: 0 }}
+                      animate={{
+                        scale: projectsIsVisible[i] ? 1 : 0,
+                        transition: {
+                          ease: "easeInOut",
+                        },
+                      }}
+                      w={{ md: "container.sm", lg: "100%" }}
+                      mx={{ md: "auto", lg: "none" }}
                       borderRadius="xl"
                       src={`http://localhost:1337${proj.backgroundImage.data.attributes.url}`}
                       transitionDuration="200ms"
                     />
 
                     <Image
+                      as={motion.img}
+                      initial={{ x: -100 }}
+                      animate={{
+                        x: projectsIsVisible[i] ? 0 : -100,
+                        transition: {
+                          ease: "easeInOut",
+                          delay: 0.1,
+                        },
+                      }}
                       borderRadius="lg"
-                      boxShadow="xl"
-                      width="600px"
-                      ml={4}
+                      boxShadow="2xl"
+                      width={{
+                        base: "400px",
+                        md: "600px",
+                        lg: "450px",
+                        xl: "600px",
+                      }}
                       position="absolute"
+                      mx="auto"
+                      left="0"
+                      right="0"
                       src={`http://localhost:1337${proj.projectPhoto[0].coverImage.data.attributes.url}`}
                       transitionDuration="200ms"
                     />
                   </Flex>
 
                   <Flex
+                    as={motion.div}
+                    initial={{ x: 100 }}
+                    animate={{
+                      x: projectsIsVisible[i] ? 0 : 100,
+                      transition: {
+                        ease: "easeInOut",
+                        delay: 0.1,
+                      },
+                    }}
+                    display="flex"
                     flexDirection="column"
-                    px={12}
+                    px={{ base: 6, md: 12 }}
+                    pt={{ base: 6, lg: 0 }}
                     justifyContent="center"
-                    gap={3}
+                    gap={{ base: 6, lg: 3 }}
                   >
                     <Flex flexDirection="column" gap={4}>
-                      <Text fontWeight="thin" fontSize="lg" color="blue.500">
+                      <Text
+                        fontWeight="thin"
+                        fontSize={{ base: "sm", sm: "md", md: "lg" }}
+                        color="blue.500"
+                      >
                         {proj.title}
                       </Text>
-                      <Heading color="gray.700">{proj.objectives}</Heading>
+                      <Heading
+                        color="gray.700"
+                        fontSize={{
+                          base: "xl",
+                          md: "2xl",
+                          lg: "3xl",
+                          xl: "4xl",
+                        }}
+                      >
+                        {proj.objectives}
+                      </Heading>
                     </Flex>
                     <Box>
-                      <Text fontSize="md" color="gray.500">
+                      <Text
+                        fontSize={{ base: "sm", md: "md" }}
+                        color="gray.500"
+                      >
                         {proj.description}
                       </Text>
                     </Box>
-                    <motion.a
+
+                    <Text
+                      as={motion.a}
                       href={proj.projectLink}
                       target="_blank"
                       initial="initial"
                       animate="initial"
                       whileHover="animate"
-                      style={{
-                        display: "inline-flex",
-                        flexDirection: "column",
-                        overflow: "hidden",
-                        width: "max-content",
-                      }}
+                      width="max-content"
+                      overflow="hidden"
+                      mx={{ base: "auto", lg: "0" }}
                     >
                       <Box
                         display="inline-flex"
@@ -368,7 +448,7 @@ export default function ProjectContent({ project }) {
                           ></motion.span>
                         </span>
                       </Box>
-                    </motion.a>
+                    </Text>
                   </Flex>
                 </SimpleGrid>
               );
