@@ -11,7 +11,7 @@ import {
 import Link from "next/link";
 import WavingHand from "./svg/WavingHand";
 
-export default function ProfileIntroduction({ introduction }) {
+export default function ProfileIntroduction({ baseUrl, introduction }) {
   return (
     <Flex flexDirection="column" justifyContent="center" maxW="500px" gap={8}>
       <Text
@@ -40,7 +40,7 @@ export default function ProfileIntroduction({ introduction }) {
                 <Image
                   boxSize={{ base: 10, lg: 12 }}
                   borderRadius="xl"
-                  src={`http://localhost:1337${social.icon.data.attributes.url}`}
+                  src={`${baseUrl}${social.icon.data.attributes.url}`}
                   _hover={{ backgroundColor: "gray.300" }}
                   transitionDuration="200ms"
                 />

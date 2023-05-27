@@ -19,7 +19,7 @@ import React, {
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavBarStore } from "@/store/useNavBarStore";
 
-export default function ProjectContent({ project }) {
+export default function ProjectContent({ baseUrl, project }) {
   const currentScreenScroll = useNavBarStore((state) => state.currentScroll);
 
   const [titleIsVisible, setTitleIsVisible] = useState(false);
@@ -263,7 +263,7 @@ export default function ProjectContent({ project }) {
                       w={{ md: "container.sm", lg: "100%" }}
                       mx={{ md: "auto", lg: "none" }}
                       borderRadius="xl"
-                      src={`http://localhost:1337${proj.backgroundImage.data.attributes.url}`}
+                      src={`${baseUrl}${proj.backgroundImage.data.attributes.url}`}
                       transitionDuration="200ms"
                     />
 
@@ -289,7 +289,7 @@ export default function ProjectContent({ project }) {
                       left="0"
                       right="0"
                       position="absolute"
-                      src={`http://localhost:1337${proj.projectPhoto[0].coverImage.data.attributes.url}`}
+                      src={`${baseUrl}${proj.projectPhoto[0].coverImage.data.attributes.url}`}
                       transitionDuration="200ms"
                     />
                   </Flex>
@@ -321,7 +321,7 @@ export default function ProjectContent({ project }) {
                       w={{ md: "container.sm", lg: "100%" }}
                       mx={{ md: "auto", lg: "none" }}
                       borderRadius="xl"
-                      src={`http://localhost:1337${proj.backgroundImage.data.attributes.url}`}
+                      src={`${baseUrl}${proj.backgroundImage.data.attributes.url}`}
                       transitionDuration="200ms"
                     />
 
@@ -347,7 +347,7 @@ export default function ProjectContent({ project }) {
                       mx="auto"
                       left="0"
                       right="0"
-                      src={`http://localhost:1337${proj.projectPhoto[0].coverImage.data.attributes.url}`}
+                      src={`${baseUrl}${proj.projectPhoto[0].coverImage.data.attributes.url}`}
                       transitionDuration="200ms"
                     />
                   </Flex>

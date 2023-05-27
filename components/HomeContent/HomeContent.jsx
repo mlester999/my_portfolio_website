@@ -5,7 +5,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import ProfileImage from "./ProfileImage";
 import ProfileIntroduction from "./ProfileIntroduction";
 
-export default function HomeContent({ navH, introduction }) {
+export default function HomeContent({ baseUrl, navH, introduction }) {
   const navBarBg = useNavBarStore((state) => state.changeNavBarBg);
   const currentScreenScroll = useNavBarStore(
     (state) => state.changeCurrentScroll
@@ -62,9 +62,12 @@ export default function HomeContent({ navH, introduction }) {
           textAlign={{ base: "center", lg: "left" }}
         >
           <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={8}>
-            <ProfileImage introduction={introduction} />
+            <ProfileImage baseUrl={baseUrl} introduction={introduction} />
 
-            <ProfileIntroduction introduction={introduction} />
+            <ProfileIntroduction
+              baseUrl={baseUrl}
+              introduction={introduction}
+            />
           </SimpleGrid>
         </Flex>
         <Flex alignItems="center" justifyContent="center" py={16}>
@@ -103,7 +106,7 @@ export default function HomeContent({ navH, introduction }) {
                         <Image
                           boxSize={{ base: 8, md: 10 }}
                           borderRadius="sm"
-                          src={`http://localhost:1337${tech.attributes.icon.data.attributes.url}`}
+                          src={`${baseUrl}${tech.attributes.icon.data.attributes.url}`}
                         />
                       </Box>
                     </Box>

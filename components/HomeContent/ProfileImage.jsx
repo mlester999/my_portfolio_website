@@ -16,7 +16,7 @@ const ProfileContainer = chakra(motion.div, {
     isValidMotionProp(prop) || shouldForwardProp(prop),
 });
 
-export default function ProfileImage({ introduction }) {
+export default function ProfileImage({ baseUrl, introduction }) {
   return (
     <ProfileContainer
       position="relative"
@@ -45,7 +45,7 @@ export default function ProfileImage({ introduction }) {
         fill
         position="relative !important"
         objectFit="cover"
-        src={`http://localhost:1337${introduction.image.data.attributes.url}`}
+        src={`${baseUrl}${introduction.image.data.attributes.url}`}
         alt="Mark Lester Acak"
       />
     </ProfileContainer>

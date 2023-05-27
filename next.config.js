@@ -3,7 +3,12 @@ const nextConfig = {
   reactStrictMode: true,
   optimizeFonts: false,
   images: {
-    domains: ["localhost"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "lobster-app-b9w2b.ondigitalocean.app",
+      },
+    ],
   },
 };
 
