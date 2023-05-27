@@ -152,9 +152,9 @@ export default function ProjectContent({ baseUrl, project }) {
                 >
                   <Flex
                     as={motion.div}
-                    initial={{ x: -100 }}
+                    initial={{ y: 100 }}
                     animate={{
-                      x: projectsIsVisible[i] ? 0 : -100,
+                      y: projectsIsVisible[i] ? 0 : 100,
                       transition: {
                         ease: "easeInOut",
                         delay: 0.1,
@@ -269,9 +269,9 @@ export default function ProjectContent({ baseUrl, project }) {
 
                     <Image
                       as={motion.img}
-                      initial={{ x: 100 }}
+                      initial={{ y: -100 }}
                       animate={{
-                        x: projectsIsVisible[i] ? 0 : 100,
+                        y: projectsIsVisible[i] ? 0 : -100,
                         transition: {
                           ease: "easeInOut",
                           delay: 0.1,
@@ -327,9 +327,9 @@ export default function ProjectContent({ baseUrl, project }) {
 
                     <Image
                       as={motion.img}
-                      initial={{ x: -100 }}
+                      initial={{ y: -100 }}
                       animate={{
-                        x: projectsIsVisible[i] ? 0 : -100,
+                        y: projectsIsVisible[i] ? 0 : -100,
                         transition: {
                           ease: "easeInOut",
                           delay: 0.1,
@@ -354,9 +354,9 @@ export default function ProjectContent({ baseUrl, project }) {
 
                   <Flex
                     as={motion.div}
-                    initial={{ x: 100 }}
+                    initial={{ y: 100 }}
                     animate={{
-                      x: projectsIsVisible[i] ? 0 : 100,
+                      y: projectsIsVisible[i] ? 0 : 100,
                       transition: {
                         ease: "easeInOut",
                         delay: 0.1,
