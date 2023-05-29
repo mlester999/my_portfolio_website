@@ -6,7 +6,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "lobster-app-b9w2b.ondigitalocean.app",
+        hostname: "api-mlta.tech",
       },
     ],
   },
