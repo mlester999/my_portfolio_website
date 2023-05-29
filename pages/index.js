@@ -21,7 +21,7 @@ export default function HomePage({ baseUrl, introduction, project }) {
 }
 
 export async function getServerSideProps() {
-  const baseUrl = "https://lobster-app-b9w2b.ondigitalocean.app";
+  const baseUrl = "https://api-mlta.tech";
 
   // Fetch data from external API
   const introductionData = await fetch(
