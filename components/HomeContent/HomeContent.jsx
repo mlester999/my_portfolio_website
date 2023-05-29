@@ -15,8 +15,6 @@ export default function HomeContent({ baseUrl, navH, introduction }) {
 
   const [height, setHeight] = useState(0);
 
-  console.log("Home content", height);
-
   useLayoutEffect(() => {
     setHeight(ref.current.offsetHeight);
   }, []);
