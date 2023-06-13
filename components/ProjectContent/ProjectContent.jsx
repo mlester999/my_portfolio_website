@@ -28,7 +28,7 @@ export default function ProjectContent({ baseUrl, project }) {
   const ref = useRef(null);
 
   const projectRefs = useRef([]);
-  projectRefs.current = project.projectInfo.map(
+  projectRefs.current = project.portfolios.data.map(
     (element, i) => projectRefs.current[i] ?? createRef()
   );
 
@@ -78,13 +78,25 @@ export default function ProjectContent({ baseUrl, project }) {
   };
 
   return (
-    <Box h="auto" bg="gray.50">
+    <Box
+      id="project-content"
+      h="auto"
+      px={{ base: 8, md: 12 }}
+      borderBottom="1px"
+      borderColor="gray.200"
+      style={{
+        backgroundImage:
+          "linear-gradient(to right top, #c8ecfb, #d6effe, #e3f2ff, #eef5ff, #f7f9ff, #fafbff, #fdfdff, #ffffff, #ffffff, #ffffff, #ffffff, #ffffff)",
+      }}
+    >
       <Flex
-        py={{ base: 24, lg: 32 }}
+        pt={{ base: 16, lg: 24 }}
+        pb={{ base: 24, lg: 32 }}
         h="full"
         maxW="1300px"
         mx="auto"
         flexDirection="column"
+        gap={{ base: 2, lg: 24 }}
       >
         <Flex
           as={motion.div}
@@ -106,8 +118,8 @@ export default function ProjectContent({ baseUrl, project }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            fontWeight="thin"
-            fontSize="lg"
+            fontWeight="semibold"
+            fontSize="4xl"
             color="blue.500"
           >
             {project.title}
@@ -117,8 +129,9 @@ export default function ProjectContent({ baseUrl, project }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            fontSize={{ md: "xl", lg: "2xl", xl: "3xl" }}
-            color="gray.700"
+            fontSize={{ base: "lg", sm: "xl", xl: "2xl" }}
+            fontWeight="semibold"
+            color="gray.600"
           >
             {project.description}
           </Heading>
@@ -131,7 +144,7 @@ export default function ProjectContent({ baseUrl, project }) {
           w="full"
           textAlign={{ base: "center", lg: "left" }}
         >
-          {project.projectInfo.map((proj, i) => {
+          {project.portfolios.data.map((proj, i) => {
             if (i % 2 == 0) {
               return (
                 <SimpleGrid
@@ -147,8 +160,8 @@ export default function ProjectContent({ baseUrl, project }) {
                   }}
                   display="grid"
                   columns={{ base: 1, lg: 2 }}
-                  px={{ base: 8, lg: 24, xl: 0 }}
-                  pt={32}
+                  gap={{ base: 0, md: 12 }}
+                  mt={12}
                 >
                   <Flex
                     as={motion.div}
@@ -164,7 +177,6 @@ export default function ProjectContent({ baseUrl, project }) {
                     gridColumnStart={{ base: "auto", lg: 1 }}
                     display="flex"
                     flexDirection="column"
-                    px={{ base: 6, md: 12 }}
                     pt={{ base: 6, lg: 0 }}
                     justifyContent="center"
                     gap={{ base: 6, lg: 3 }}
@@ -175,7 +187,7 @@ export default function ProjectContent({ baseUrl, project }) {
                         fontSize={{ base: "sm", sm: "md", md: "lg" }}
                         color="blue.500"
                       >
-                        {proj.title}
+                        {proj.attributes.title}
                       </Text>
                       <Heading
                         color="gray.700"
@@ -186,7 +198,7 @@ export default function ProjectContent({ baseUrl, project }) {
                           xl: "4xl",
                         }}
                       >
-                        {proj.objectives}
+                        {proj.attributes.objectives}
                       </Heading>
                     </Flex>
                     <Box>
@@ -194,12 +206,12 @@ export default function ProjectContent({ baseUrl, project }) {
                         fontSize={{ base: "sm", md: "md" }}
                         color="gray.500"
                       >
-                        {proj.description}
+                        {proj.attributes.description}
                       </Text>
                     </Box>
                     <Text
                       as={motion.a}
-                      href={proj.projectLink}
+                      href={proj.attributes.projectLink}
                       target="_blank"
                       initial="initial"
                       animate="initial"
@@ -263,7 +275,7 @@ export default function ProjectContent({ baseUrl, project }) {
                       w={{ md: "container.sm", lg: "100%" }}
                       mx={{ md: "auto", lg: "none" }}
                       borderRadius="xl"
-                      src={`${baseUrl}${proj.backgroundImage.data.attributes.url}`}
+                      src={`${baseUrl}${proj.attributes.backgroundImage.data.attributes.url}`}
                       transitionDuration="200ms"
                     />
 
@@ -289,7 +301,7 @@ export default function ProjectContent({ baseUrl, project }) {
                       left="0"
                       right="0"
                       position="absolute"
-                      src={`${baseUrl}${proj.projectPhoto[0].coverImage.data.attributes.url}`}
+                      src={`${baseUrl}${proj.attributes.projectPhoto[0].coverImage.data.attributes.url}`}
                       transitionDuration="200ms"
                     />
                   </Flex>
@@ -304,9 +316,9 @@ export default function ProjectContent({ baseUrl, project }) {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: projectsIsVisible[i] ? 1 : 0 }}
                   display="grid"
+                  gap={{ base: 0, md: 12 }}
                   columns={{ base: 1, lg: 2 }}
-                  px={{ base: 8, lg: 24, xl: 0 }}
-                  pt={32}
+                  pt={20}
                 >
                   <Flex position="relative" alignItems="center">
                     <Image
@@ -321,7 +333,7 @@ export default function ProjectContent({ baseUrl, project }) {
                       w={{ md: "container.sm", lg: "100%" }}
                       mx={{ md: "auto", lg: "none" }}
                       borderRadius="xl"
-                      src={`${baseUrl}${proj.backgroundImage.data.attributes.url}`}
+                      src={`${baseUrl}${proj.attributes.backgroundImage.data.attributes.url}`}
                       transitionDuration="200ms"
                     />
 
@@ -347,7 +359,7 @@ export default function ProjectContent({ baseUrl, project }) {
                       mx="auto"
                       left="0"
                       right="0"
-                      src={`${baseUrl}${proj.projectPhoto[0].coverImage.data.attributes.url}`}
+                      src={`${baseUrl}${proj.attributes.projectPhoto[0].coverImage.data.attributes.url}`}
                       transitionDuration="200ms"
                     />
                   </Flex>
@@ -364,7 +376,6 @@ export default function ProjectContent({ baseUrl, project }) {
                     }}
                     display="flex"
                     flexDirection="column"
-                    px={{ base: 6, md: 12 }}
                     pt={{ base: 6, lg: 0 }}
                     justifyContent="center"
                     gap={{ base: 6, lg: 3 }}
@@ -375,7 +386,7 @@ export default function ProjectContent({ baseUrl, project }) {
                         fontSize={{ base: "sm", sm: "md", md: "lg" }}
                         color="blue.500"
                       >
-                        {proj.title}
+                        {proj.attributes.title}
                       </Text>
                       <Heading
                         color="gray.700"
@@ -386,7 +397,7 @@ export default function ProjectContent({ baseUrl, project }) {
                           xl: "4xl",
                         }}
                       >
-                        {proj.objectives}
+                        {proj.attributes.objectives}
                       </Heading>
                     </Flex>
                     <Box>
@@ -394,13 +405,13 @@ export default function ProjectContent({ baseUrl, project }) {
                         fontSize={{ base: "sm", md: "md" }}
                         color="gray.500"
                       >
-                        {proj.description}
+                        {proj.attributes.description}
                       </Text>
                     </Box>
 
                     <Text
                       as={motion.a}
-                      href={proj.projectLink}
+                      href={proj.attributes.projectLink}
                       target="_blank"
                       initial="initial"
                       animate="initial"

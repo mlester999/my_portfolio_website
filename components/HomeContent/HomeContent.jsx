@@ -15,38 +15,59 @@ export default function HomeContent({ baseUrl, navH, introduction }) {
 
   const [height, setHeight] = useState(0);
 
-  useLayoutEffect(() => {
-    setHeight(ref.current.offsetHeight);
-  }, []);
-
   const changeNavBarBG = () => {
-    if (window.scrollY >= height) {
-      navBarBg(true);
-    } else {
-      navBarBg(false);
-    }
-
-    currentScreenScroll(window.scrollY);
+    const updatedHeight = ref.current.offsetHeight;
+    setHeight((prevHeight) => {
+      if (window.scrollY >= prevHeight) {
+        navBarBg(true);
+      } else {
+        navBarBg(false);
+      }
+      currentScreenScroll(window.scrollY);
+      return updatedHeight;
+    });
   };
 
   useEffect(() => {
+    setHeight(ref.current.offsetHeight);
+  }, []);
+
+  useEffect(() => {
     window.addEventListener("scroll", changeNavBarBG);
-  }, [height]);
+
+    return () => {
+      window.removeEventListener("scroll", changeNavBarBG);
+    };
+  }, []);
 
   return (
     <Box
+      id="home-content"
       as={motion.div}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 2 }}
       ref={ref}
-      h="auto"
+      initial={{ opacity: 0, y: 50 }}
+      animate={{
+        opacity: 1,
+        y: 0,
+        transition: {
+          ease: "easeInOut",
+          type: "spring",
+          stiffness: 50,
+        },
+      }}
+      borderBottom="1px"
+      borderColor="gray.200"
+      h="100vh"
       overflow="hidden"
-      px={16}
+      px={8}
+      style={{
+        backgroundImage:
+          "linear-gradient(to right bottom, #c8ecfb, #d6effe, #e3f2ff, #eef5ff, #f7f9ff, #fafbff, #fdfdff, #ffffff, #ffffff, #ffffff, #ffffff, #ffffff)",
+      }}
     >
       <Flex
-        mt={`${navH}px`}
-        py={{ base: 16, lg: 24 }}
+        alignItems="center"
+        justifyContent="center"
         h="full"
         maxW="1300px"
         mx="auto"
@@ -59,7 +80,10 @@ export default function HomeContent({ baseUrl, navH, introduction }) {
           w="full"
           textAlign={{ base: "center", lg: "left" }}
         >
-          <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={8}>
+          <SimpleGrid
+            columns={{ base: 1, lg: 2 }}
+            spacing={{ base: 8, lg: 40 }}
+          >
             <ProfileImage baseUrl={baseUrl} introduction={introduction} />
 
             <ProfileIntroduction
@@ -68,7 +92,7 @@ export default function HomeContent({ baseUrl, navH, introduction }) {
             />
           </SimpleGrid>
         </Flex>
-        <Flex alignItems="center" justifyContent="center" py={16}>
+        {/* <Flex alignItems="center" justifyContent="center" py={16}>
           <SimpleGrid columns={{ base: 1 }} spacing={8}>
             <Text fontSize={20} textAlign={{ base: "center" }}>
               Tech Stack:
@@ -113,7 +137,7 @@ export default function HomeContent({ baseUrl, navH, introduction }) {
               })}
             </Flex>
           </SimpleGrid>
-        </Flex>
+        </Flex> */}
       </Flex>
     </Box>
   );

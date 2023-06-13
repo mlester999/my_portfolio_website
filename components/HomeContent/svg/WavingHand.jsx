@@ -8,8 +8,8 @@ export default function WavingHand() {
       style={{
         display: "inline-block",
         marginLeft: "16px",
-        maxHeight: "40px",
-        maxWidth: "40px",
+        maxHeight: "30px",
+        maxWidth: "30px",
       }}
     >
       <radialGradient

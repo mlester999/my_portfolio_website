@@ -1,5 +1,4 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
-import Link from "next/link";
+import { Box, Flex, Link, Text } from "@chakra-ui/react";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import NavLink from "./NavLink";
@@ -10,6 +9,11 @@ import { useNavBarStore } from "@/store/useNavBarStore";
 export default function NavBar({ navH, setNavH }) {
   const navBar = useNavBarStore((state) => state.navBarBg);
   const initialNav = useNavBarStore((state) => state.initialNavPos);
+
+  const scroll = (id) => {
+    const section = document.getElementById(id);
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return (
     <React.Fragment>
@@ -27,28 +31,52 @@ export default function NavBar({ navH, setNavH }) {
         onHeightChanged={(h) => setNavH(h)}
         leftIcon={
           <a href="/">
-            <Text fontSize={24} fontWeight="bold" margin="10px">
-              Marky.dev
+            <Text
+              fontSize={{ base: 20, md: 24 }}
+              fontWeight="bold"
+              margin="10px"
+              style={{
+                background: "#13C9CF",
+                background:
+                  "linear-gradient(to left, #13C9CF 0%, #006ECF 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              Mark Lester Acak
             </Text>
           </a>
         }
         rightElements={
           <>
-            <Link href="#">
+            <Link
+              onClick={() => {
+                window.scrollTo({
+                  top: 0,
+                  behavior: "smooth",
+                });
+              }}
+            >
               <Box textTransform="uppercase" p="24px">
                 <Text>Home</Text>
               </Box>
             </Link>
 
-            <Link href="#">
+            <Link onClick={() => scroll("project-content")}>
               <Box textTransform="uppercase" p="24px">
                 <Text>Projects</Text>
               </Box>
             </Link>
 
-            <Link href="#">
+            <Link onClick={() => scroll("skills-content")}>
               <Box textTransform="uppercase" p="24px">
-                <Text>Services</Text>
+                <Text>Skills</Text>
+              </Box>
+            </Link>
+
+            <Link onClick={() => scroll("contacts-content")}>
+              <Box textTransform="uppercase" p="24px">
+                <Text>Contact</Text>
               </Box>
             </Link>
           </>

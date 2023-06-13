@@ -21,8 +21,8 @@ export default function ProfileImage({ baseUrl, introduction }) {
     <ProfileContainer
       position="relative"
       mx={{ sm: "auto", lg: 0 }}
-      width={{ sm: "300px", lg: "400px" }}
-      height={{ sm: "300px", lg: "400px" }}
+      width={{ sm: "300px", lg: "400px", xl: "500px" }}
+      height={{ sm: "300px", lg: "400px", xl: "500px" }}
       border="4px"
       borderColor="black"
       overflow="hidden"
